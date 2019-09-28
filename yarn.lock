@@ -2347,6 +2347,11 @@ yallist@^3.0.0, yallist@^3.0.3:
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-3.1.0.tgz?cache=0&sync_timestamp=1569518058470&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyallist%2Fdownload%2Fyallist-3.1.0.tgz#906cc2100972dc2625ae78f566a2577230a1d6f7"
   integrity sha1-kGzCEAly3CYlrnj1ZqJXcjCh1vc=
 
+yarn@^1.17.3:
+  version "1.17.3"
+  resolved "https://registry.npm.taobao.org/yarn/download/yarn-1.17.3.tgz#60e0b77d079eb78e753bb616f7592b51b6a9adce"
+  integrity sha1-YOC3fQeet451O7YW91krUbaprc4=
+
 ylru@^1.2.0:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/ylru/download/ylru-1.2.1.tgz#f576b63341547989c1de7ba288760923b27fe84f"
