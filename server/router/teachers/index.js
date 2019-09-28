@@ -27,5 +27,12 @@ teachers.post('/',async(ctx)=>{
     })
     ctx.body = queryres
 })
-
+teachers.post('/delete',async(ctx)=>{
+    let queryres = await db.deletes('ab');
+    ctx.body = queryres
+})
+teachers.post('/search',async(ctx)=>{
+    let queryres = await db.search({});
+    ctx.body = queryres
+})
 module.exports = teachers

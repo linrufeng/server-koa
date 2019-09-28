@@ -19,13 +19,34 @@
                     score 评分 -->
     <button id="add">    添加</button>
    
-
+    <button id="delete">    删除</button>    
+    <button id="search">    查询</button>    
 </body>
 <script src="../js/jq.js"></script>
 <script>
 $('#add').click(function(){
     $.ajax({
         url:'/teacher',
+        type:'post',
+        dataType:'json',
+        data:{}
+    }).done(res=>{
+        console.log(res)
+    })
+})
+$('#delete').click(function(){
+    $.ajax({
+        url:'/teacher/delete',
+        type:'post',
+        dataType:'json',
+        data:{}
+    }).done(res=>{
+        console.log(res)
+    })
+})
+$('#search').click(function(){
+    $.ajax({
+        url:'/teacher/search',
         type:'post',
         dataType:'json',
         data:{}

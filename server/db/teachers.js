@@ -52,13 +52,30 @@ class Teacher{
 
     }
     deletes(id){
-
+      return new Promise((resolve,reject)=>{
+        MyModel.deleteOne({'name':'李春秀'},function(err,res){
+          if(err){
+            reject(err);
+          }else{
+            resolve(res);
+          }
+        })
+      })
     }
     edit(obj){
 
     }
     search(obj){
-
+      return new Promise((resolve,reject)=>{
+       MyModel.find({}, (err,res)=>{
+        if(err){
+          reject(err)
+        }else{
+          resolve(res)
+        }
+       })
+      
+      })
     }
 }
 module.exports = new Teacher()
