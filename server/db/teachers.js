@@ -32,3 +32,50 @@ const ceshiSchema = new Schema({
         img:[String]
     }]
 });
+const MyModel = mongoose.model('Teachers', ceshiSchema);
+class Teacher{
+
+    constructor () {
+
+    }
+    add(obj){
+        const m = new MyModel(obj)
+        return new Promise((resolve, reject)=> {
+          m.save((err, res) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(res)
+            console.log(res)
+          })
+        })
+
+    }
+    deletes(id){
+      return new Promise((resolve,reject)=>{
+        MyModel.deleteOne({'name':'李春秀'},function(err,res){
+          if(err){
+            reject(err);
+          }else{
+            resolve(res);
+          }
+        })
+      })
+    }
+    edit(obj){
+
+    }
+    search(obj){
+      return new Promise((resolve,reject)=>{
+       MyModel.find({}, (err,res)=>{
+        if(err){
+          reject(err)
+        }else{
+          resolve(res)
+        }
+       })
+      
+      })
+    }
+}
+module.exports = new Teacher()
