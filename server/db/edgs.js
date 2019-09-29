@@ -38,3 +38,40 @@ const ceshiSchema = new Schema({
     edgImgs:[String],
     edgVideos:[String]
   });
+  const MyModel = mongoose.model('edgs', ceshiSchema);
+  class Edgs{
+      // 添加
+      add(obj){
+        const m = new MyModel(obj)
+        return new Promise((resolve, reject)=> {
+            m.save((err, res) => {
+              if (err) {
+                reject(err)
+              }else{
+                resolve(res)
+              console.log(res)
+              }              
+            })
+          })
+      }
+      // 查询
+      search(obj = {fullName:String,name:String,leader:String,classifyString:String}){
+        return new Promise((resolve,reject)=>{
+            MyModel.find(obj,(err,res)=>{
+                if(err){
+                    reject(err)
+                }else{
+                    resolve(res)
+                }
+            })
+        })
+      }
+      // 修改
+      edit(id){
+
+      }
+      // 删除
+      delete(id){
+
+      }
+  }
