@@ -6,9 +6,7 @@ const views = require('koa-views');
 const router = require('./router/index');
 const app = new Koa();
 // 加载模板引擎
-app.use(views(path.join(__dirname, '../views'), {
-    extension: 'ejs'
-  }))
+app.use(views(path.join(__dirname, '../views')))
 // server log
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
