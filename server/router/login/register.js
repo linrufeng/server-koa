@@ -3,7 +3,7 @@ const User = require('../../db/user')
 const home = new Router()
 
 const register = new Router()
-
+// /logon/register
 register.get('/', async (ctx) => {
     let title = "注册"
     await ctx.render('register', {
