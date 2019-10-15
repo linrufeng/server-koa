@@ -4,6 +4,7 @@ const static  = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const views = require('koa-views');
 const router = require('./router/index');
+const cors = require('koa-cors');
 const app = new Koa();
 // 加载模板引擎
 app.use(views(path.join(__dirname, '../views')))
@@ -12,6 +13,7 @@ app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     await next();
 });
+app.use(cors());
 // post
 app.use(bodyParser());
 // router
