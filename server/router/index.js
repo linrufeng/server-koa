@@ -1,7 +1,7 @@
 const Router = require('koa-router');
 const login = require('./login/index'); // 注册
 const teachers = require('./teachers/index'); // 老师
-const jigou = require()
+// const jigou = require()
 let routers = new Router();
 let main = new Router();
 //首页
