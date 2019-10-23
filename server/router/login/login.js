@@ -15,7 +15,7 @@ login.get('/', async (ctx) => {
     })
 }).post('/', async (ctx) => {
     const data = ctx.request.body
-    console.log(ctx.session.logState,'lls')
+    console.log(ctx.session.views,'lls')
     if(ctx.session.logState){
         ctx.body = {
             'code': 1,
@@ -34,7 +34,8 @@ login.get('/', async (ctx) => {
     let queryres = await User.queryEmail(data.name)    
     if (queryres) {
         if(queryres[0].password === data.password) {
-            ctx.session.logState = 'true';
+            ctx.session.views = 1;
+            console.log(ctx.session.views,'111')
             ctx.body = {
                 'code': 1,
                 'data': queryres[0],
