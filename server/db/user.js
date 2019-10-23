@@ -26,9 +26,10 @@ class Userdb {
        })
      })
   }
+  // 改成根据用户名查询
 queryEmail (em) {
    return new Promise((resolve, reject) => {
-     MyModel.find({email: em}, (err, res) => {
+     MyModel.find({name: em}, (err, res) => {
        if(err) {
          reject(err)
        }

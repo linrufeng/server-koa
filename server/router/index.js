@@ -21,7 +21,7 @@ main.get('/404', async (ctx) => {
 //  首页
 routers.use('/', main.routes(), main.allowedMethods())
 // 登陆注册
-routers.use('/logon',login.routes(),login.allowedMethods());
+routers.use('/login',login.routes(),login.allowedMethods());
 //老师
 routers.use('/teacher',teachers.routes(),teachers.allowedMethods());
 module.exports = routers;
