@@ -55,8 +55,7 @@ queryEmail (em) {
          resolve(res)
          console.log(res)
        })
-     })
-     
+     })     
   }
 }
 module.exports = new Userdb()

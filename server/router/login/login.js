@@ -7,45 +7,50 @@ const login = new Router()
       
 //     }
 // }
-// /logon/login
-login.get('/', async (ctx) => {
-    let title = "登录"
-    await ctx.render('login', {
-        title
-    })
-}).post('/', async (ctx) => {
+/**
+ * 登陆接口
+ * url: /logon/login
+ */
+
+login.post('/', async (ctx) => {
     const data = ctx.request.body    
+    //  如果已经登陆
     if(ctx.session.state){       
         ctx.body = {
             'code': 1,
-            'data': {},
-            'mesg': '已经登录,无需重复'
+            'data': ctx.session.usemsg,
+            'msg': '已经登录,无需重复'
         }
         return
     }      
+    // 账号名称为空
     if(!data.name){
         ctx.body = {
             'code': 1,
             'data': {},
-            'mesg': '请输入登陆邮箱'
+            'msg': '请输入账号名称'
         }
         return
     }
-    let queryres = await User.queryEmail(data.name)    
+    // 查询是否有这个账号名称 ，并获取账号信息
+    let queryres = await User.queryEmail(data.name)   
+    // 如果账号存在
     if (queryres) {
+        //若果成功
         if(queryres[0].password === data.password) {
-            ctx.session.state=true
+            ctx.session.state=true;
+            ctx.session.usemsg = queryres[0];
             ctx.body = {
                 'code': 1,
                 'data': queryres[0],
-                'mesg': '登录成功'
+                'msg': '登录成功'
             }
             
         }else {
             ctx.body = {
-                'code': 0,
+                'code': 2,
                 'data': {},
-                'mesg': '密码错误'
+                'msg': '密码错误'
             }
         }
         
@@ -53,7 +58,7 @@ login.get('/', async (ctx) => {
         ctx.body = {
             'code': 0,
             'data': {},
-            'mesg': '没有该用户，去注册吧'
+            'msg': '没有该用户，去注册吧'
         }
     }
 })
