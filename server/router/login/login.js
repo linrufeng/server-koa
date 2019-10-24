@@ -14,28 +14,27 @@ login.get('/', async (ctx) => {
         title
     })
 }).post('/', async (ctx) => {
-    const data = ctx.request.body
-    console.log(ctx.session.views,'lls')
-    if(ctx.session.logState){
+    const data = ctx.request.body    
+    if(ctx.session.state){       
         ctx.body = {
             'code': 1,
             'data': {},
-            'mesg': '您已经登陆'
+            'mesg': '已经登录,无需重复'
         }
-    }
-    
+        return
+    }      
     if(!data.name){
         ctx.body = {
             'code': 1,
             'data': {},
             'mesg': '请输入登陆邮箱'
         }
+        return
     }
     let queryres = await User.queryEmail(data.name)    
     if (queryres) {
         if(queryres[0].password === data.password) {
-            ctx.session.views = 1;
-            console.log(ctx.session.views,'111')
+            ctx.session.state=true
             ctx.body = {
                 'code': 1,
                 'data': queryres[0],
