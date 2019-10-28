@@ -20,7 +20,9 @@ const CONFIG = {
 };
 
 // 加载模板引擎
-app.use(views(path.join(__dirname, '../views')))
+app.use(views(path.join(__dirname, '../views'), {
+    extension: 'ejs'
+    }))
 // server log
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
@@ -41,6 +43,8 @@ app.use(cors({
 app.use(session(CONFIG, app));
 // post
 app.use(bodyParser());
+
+
 // router
 app.use(router.routes());
 // static

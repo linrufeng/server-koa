@@ -1,27 +1,16 @@
 const Router = require('koa-router');
+const home = require('./home'); // 首页
 const login = require('./login/index'); // 注册
 const teachers = require('./teachers/index'); // 老师
+const edu = require('./edu/index') // 教育
 // const jigou = require()
 let routers = new Router();
-let main = new Router();
-//首页
-main.get('/', async (ctx) => {
-    let title = '首页'
-    await ctx.render('index', {
-        title
-    })
-})
-// 404错误页
-main.get('/404', async (ctx) => {
-    let title = "404"
-    await ctx.render('err', {
-        title
-    })
-})
 //  首页
-routers.use('/', main.routes(), main.allowedMethods())
-// 登陆注册
-routers.use('/login',login.routes(),login.allowedMethods());
-//老师
-routers.use('/teacher',teachers.routes(),teachers.allowedMethods());
+routers.use('', home.routes(), home.allowedMethods())
+// 教育机构
+routers.use('', edu.routes(), edu.allowedMethods())
+// // 登陆注册
+// routers.use('/login',login.routes(),login.allowedMethods());
+// //老师
+// routers.use('/teacher',teachers.routes(),teachers.allowedMethods());
 module.exports = routers;

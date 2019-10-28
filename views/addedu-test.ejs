@@ -1,0 +1,72 @@
+<%- include('./include/header')%>
+    <title><%= title%></title>
+</head>
+<body>
+    <div class="h2box">
+       <h2><%= title%></h2>
+    </div>
+    
+    <div class="formbox">
+        <form onsubmit="return false" id="formDate">
+            <div class="form-group">
+                <label for="exampleInputEmail1">教育机构的全名</label>
+                <input name="fullname" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">教育机构的简称</label>
+              <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">教育机构的负责人</label>
+                <input name="user" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">一句话说明</label>
+              <input type="text" name="msg" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">风采展示</label>
+                <input type="text" name="img" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-success" id="login">创建教育结构</button>
+            <button type="submit" class="btn btn-success" id="getdata">查看创建结果</button>
+            <br>           
+          </form>
+          
+    </div>
+    <script src="../jq.js"></script>
+    <script>
+        $("#login").on('click', function () {
+           
+            var datas = $('#formDate').serializeArray()           
+            var temp = {};
+            datas.forEach((item)=>{
+                temp[item.name] = item.value;
+            })
+            $.ajax({
+              url: '/eduAdd',
+              method:'post',
+              data: temp,
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+        })
+    $('#getdata').click(function(){
+        $.ajax({
+              url: '/eduList',
+              method:'get',             
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+    })
+    </script>
+</body>
+</html>
