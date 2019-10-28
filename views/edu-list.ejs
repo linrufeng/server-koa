@@ -1,0 +1,49 @@
+<%- include('./include/header')%>
+    <title><%= title%></title>
+</head>
+<body>
+    <div class="h2box">
+       <h2><%= title%></h2>
+    </div>
+    
+    <ul>
+        <% list.forEach(function(item){ %>
+          <li><%= item.name %></li>
+        <% }); %>
+      </ul>
+    <script src="../jq.js"></script>
+    <script>
+        $("#login").on('click', function () {
+           
+            var datas = $('#formDate').serializeArray()           
+            var temp = {};
+            datas.forEach((item)=>{
+                temp[item.name] = item.value;
+            })
+            $.ajax({
+              url: '/eduAdd',
+              method:'post',
+              data: temp,
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+        })
+    $('#getdata').click(function(){
+        $.ajax({
+              url: '/eduList',
+              method:'get',             
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+    })
+    </script>
+</body>
+</html>
