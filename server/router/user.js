@@ -23,5 +23,21 @@ login.post('/getcode',async(ctx)=>{
         code:code
     })
 })
-
+login.post('/login',async(ctx)=>{
+    if(ctx.session.login){
+        return{
+            code:1,
+            data:ctx.session.user,
+            msg:'您已登录请勿重复登录'
+        }
+    }
+    const data = ctx.request.body;  
+    let res = await User.login(data)
+    if(res.code){
+        ctx.session.login = true; 
+        // 缓存用户信息
+        ctx.session.user = res.data;
+    }
+    ctx.body = res
+})
 module.exports = login

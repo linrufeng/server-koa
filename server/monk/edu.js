@@ -11,7 +11,7 @@ const {edudb,teacherdb,classiflydb} = require('./db');
  * 改
  */
 class Edu {
-    constructor(){}
+    constructor(){}    
     /**
      * 增加
      * reg: 根据 全称 或地址 判断是否有重复的

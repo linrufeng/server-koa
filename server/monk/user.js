@@ -2,8 +2,32 @@ const {userdb} = require('./db');
 const nodemailer = require('nodemailer');
 class Use{
     constructor(){}
-    async login(){
-
+    /**
+     * 登录功能
+     * @param {countName} String 
+     * @param {password} String 
+     */
+    async login(obj){
+        if(!obj.countName){
+           return{
+               code:0,
+               msg:'用户名不存在'
+           }
+        }
+        let res = await userdb.findOne({countName:obj.countName})
+        
+        if(obj.password === res.password){
+            return{
+                code:1,
+                data:res,
+                msg:'登陆成功'
+            }
+        }else{
+            return{
+                code:0,
+                msg:'密码错误请重新输入'
+            }
+        }
     }
     /**
      * 增加用户
@@ -94,8 +118,7 @@ class Use{
         let ary = [];
         for(let i=0;i<6;i++){
             ary.push(Math.round(Math.random()*9));
-        }
-         
+        }         
         return ary.join('');
     }
 }
