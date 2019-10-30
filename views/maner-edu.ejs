@@ -1,0 +1,101 @@
+<%- include('./include/header')%>
+    <title><%= title%></title>
+</head>
+<body>
+    <div class="h2box">
+       <h2><%= title%></h2>
+    </div>
+    
+    <div>
+    <h3>基本信息</h3>
+    <P>编号：<span id="eduId"><%= data._id %></span></P>     
+    <p>全称：<%= data.fullname %> </p> 
+    <P>简称：<%= data.name %></P> 
+    <P>一句话：<%= data.msg %></P> 
+    <P>创使人：<%= data.user %></P> 
+    <h4>课程</h4>
+    <% if (!data.classifys) { %>
+       <div class="add">
+            <h3 >暂无课程,请添加:</h3>                   
+       </div>
+    <% } %>
+      <p>课程名称:
+            <% if (data.classifys.length>0) { %>
+            <% data.classifys.forEach(function(item){ %>
+                 <span><%= item.name %></span> 
+              <% }); %>
+              <% } %>
+              <p>课程名称:
+        <input id="classifymsg" type="text"> <button id="addclassify">确定</button></p>     
+    </div>
+    <h4>老师</h4>
+    <div class="add-teachers">
+        <form onsubmit="return false" action="#" id="teacherMsg">
+            <p>
+                姓名: 
+                <input name="name" type="text">
+            </p>
+            <p>
+                所教课程: 
+                <select name="classifyId" id="">
+                    <% if (data.classifys.length>0) { %>
+                        <% data.classifys.forEach(function(item){ %>
+                            <option value="<%= item._id%>"><%= item.name %></span></option>
+                        <% }); %>
+                    <% } %>
+                </select>
+            </p>
+            <p>
+                性别: 
+                <input name="sex" value="m" type="radio"> 男
+                <input name="sex" value="w" type="radio"> 女
+            </p>
+            <p>
+                教龄:
+                <input name="age" type="text">
+            </p>
+            <button id="add-teacher-srue">添加</button>
+        </form>
+    </div>
+    <script src="../jq.js"></script>
+    <script>
+        $("#addclassify").on('click', function () {  
+            $.ajax({
+              url: '/classifyAdd',
+              method:'post',
+              data: {
+                  eduid:$('#eduId').text(),
+                  name:$('#classifymsg').val()
+              },
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+        })
+        $('#add-teacher-srue').on('click',function(){
+            
+            var datas = $('#teacherMsg').serializeArray()           
+            var temp = {};
+            datas.forEach((item)=>{
+                temp[item.name] = item.value;
+            })
+            temp['eduid'] = $('#eduId').text(),
+            $.ajax({
+              url: '/teacherAdd',
+              method:'post',
+              data: temp,
+              success: function (res) {
+                console.log(res)
+              },
+              error: function(err) {
+                  console.log(err)
+              }
+            })
+        })
+    
+    </script>
+</body>
+</html>
