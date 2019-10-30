@@ -24,12 +24,14 @@ login.post('/getcode',async(ctx)=>{
     })
 })
 login.post('/login',async(ctx)=>{
+    // this..url('center')
     if(ctx.session.login){
-        return{
+        ctx.body ={
             code:1,
             data:ctx.session.user,
             msg:'您已登录请勿重复登录'
         }
+        return 
     }
     const data = ctx.request.body;  
     let res = await User.login(data)
@@ -37,7 +39,15 @@ login.post('/login',async(ctx)=>{
         ctx.session.login = true; 
         // 缓存用户信息
         ctx.session.user = res.data;
+        login.url('/center')
     }
     ctx.body = res
+})
+login.post('/logout',async(ctx)=>{
+    ctx.session.login = false;     
+    ctx.body = {
+        code:0,
+        msg:'注销成功'
+    }
 })
 module.exports = login

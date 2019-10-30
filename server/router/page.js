@@ -31,8 +31,19 @@ main.get('/maner-edu', async (ctx) => {
 })
 main.get('/register', async (ctx) => {
     let title = '注册'
-   
     await ctx.render('register', {
+        title,
+    })
+})
+main.get('/login', async (ctx) => {
+    let title = '注册'
+    await ctx.render('login', {
+        title,
+    })
+})
+main.get('/center', async (ctx) => {
+    let title = '登录成功'
+    await ctx.render('center', {
         title,
     })
 })
