@@ -8,6 +8,12 @@ class Use{
     /**
      * 增加用户
      * @param {*} obj 
+     * countName 必填
+     * tel 可选
+     * email 邮箱
+     * emailCode 获取到的邮箱验证码
+     * password 密码
+     * type:1
      */
     async add(obj){       
         if(obj.countName && await userdb.findOne({countName:obj.countName})){
@@ -22,26 +28,31 @@ class Use{
                 msg:'手机号已被占用'
             }
         }
-        if(obj.tel && await userdb.findOne({tel:obj.tel})){
+        if(obj.email && await userdb.findOne({tel:obj.email})){
             return {
                 code:0,
                 msg:'邮箱已被占用'
             }
         }    
-        if(obj.tel&&obj.semailCode !== obj.emailCode){
+        if(obj.email&&obj.semailCode !== obj.emailCode){
             return {
                 code:0,
                 msg:'验证码不正确'
             }
         }  
-        return  await userdb.insert(obj)
+        return  await userdb.insert({
+            countName: obj.countName,
+            email:obj.email|| '',
+            tel:obj.tel || '',
+            password:obj.password
+        })
     }
     /**
      * 验证邮箱
      * @param {email} String 
      * @param {code} Number 
      */
-    vertemail(obj){
+    async vertemail(obj){
         let transporter = nodemailer.createTransport({         
             service: '"163"', 
             port: 994, 
@@ -54,20 +65,38 @@ class Use{
           let mailOptions = {
             from: '<18201255339@163.com>', 
             to: obj.email, 
-            subject: '邮箱验证text',             
-            text: `哈哈${obj.code}`
+            subject: '评说邮箱验证',             
+            text: `您的验证码是：${obj.code},请妥善保管`
           };          
           // send mail with defined transport object
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              return console.log(error);
-            }
-            console.log('Message sent: %s', info.messageId);
-            // Message sent: <04ec7731-cc68-1ef6-303c-61b0f796b78f@qq.com>
-          });
+          let res =  await new Promise((resolve,reject)=>{
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  return console.log(error);
+                  reject({
+                      code:0,
+                      data:error,
+                      msg:"发生错误"
+                  })
+                }
+                console.log('Message sent: %s', info.messageId);
+                resolve({
+                    code:1,
+                    data:info.messageId,
+                    msg:' 发送成功'
+                })                
+              });
+          })
+          return res;
+          
     }
     random(){
-        return Math.round(Math.random()*9999999)
+        let ary = [];
+        for(let i=0;i<6;i++){
+            ary.push(Math.round(Math.random()*9));
+        }
+         
+        return ary.join('');
     }
 }
 //  let test = new Use('lls')

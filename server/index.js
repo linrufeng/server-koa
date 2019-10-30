@@ -11,7 +11,7 @@ const session = require('koa-session');
 app.keys = ['pingshuo'];
 const CONFIG = {
   key: 'pingshuo',   //cookie key (default is koa:sess)
-  maxAge: 120000,  // cookie的过期时间 maxAge in ms (default is 1 days)
+  maxAge: 60*60*1000,  // cookie的过期时间 maxAge in ms (default is 1 days)
   overwrite: true,  //是否可以overwrite    (默认default true)
   httpOnly: true, //cookie是否只有服务器端可以访问 httpOnly or not (default true)
   signed: true,   //签名默认true
@@ -30,10 +30,11 @@ app.use(async (ctx, next) => {
 });
 app.use(cors({
     origin: function (ctx) {
-        if (ctx.url === '/test') {
-            return "*"; // 允许来自所有域名请求
-        }
-        return 'http://localhost:8080'; 
+        // if (ctx.url === '/test') {
+        //     return "*"; // 允许来自所有域名请求
+        // }
+        return "*";
+        // return 'http://localhost:8080'; 
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],    
     credentials: true,
