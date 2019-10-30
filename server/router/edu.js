@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const edu = require('./../../monk/edu');
+const edu = require('../monk/edu');
 const router = new Router();
 /**
  * 教育机构接口
@@ -8,40 +8,29 @@ const router = new Router();
 router.post('/eduAdd',async(ctx)=>{
     const data = ctx.request.body
     let res = await edu.add(data)
-    ctx.body = {
-        code:1,
-        data:res,
-        msg:'成功'
-    }    
+    ctx.body = res
 })
 //  增加类别
 router.post('/classifyAdd',async(ctx)=>{
     const data = ctx.request.body
     let res = await edu.addClassifly(data)
-    ctx.body = {
-        code:1,
-        data:res,
-        msg:'成功'
-    }
+    ctx.body = res
 })
 // 增加老师
 router.post('/teacherAdd',async(ctx)=>{
     const data = ctx.request.body
     let res = await edu.addTeacher(data)
-    ctx.body = {
-        code:1,
-        data:res,
-        msg:'成功'
-    }
+    ctx.body = res
+})
+//  删除老师
+router.post('/teacherDelete',async(ctx)=>{
+    const data = ctx.request.body
+    let res = await edu.removeTeacher(data)
+    ctx.body = res
 })
 // 获取教育机构列表
-router.get('/edulist', async (ctx) => {
-    let title = '首页'
+router.get('/edulist', async (ctx) => {   
     let res = await edu.get();
-    ctx.body = {
-        code:1,
-        data:res,
-        msg:'成功'
-    }
+    ctx.body = res;
 })
 module.exports = router;

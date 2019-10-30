@@ -1,12 +1,11 @@
 const Router = require('koa-router');
-const home = require('./home'); // 首页
-const login = require('./login/index'); // 注册
-const teachers = require('./teachers/index'); // 老师
-const edu = require('./edu/index') // 教育
+const page = require('./page'); // 首页
+const login = require('./login'); // 注册
+const edu = require('./edu') // 教育
 // const jigou = require()
 let routers = new Router();
 //  首页
-routers.use('', home.routes(), home.allowedMethods())
+routers.use('', page.routes(), page.allowedMethods())
 // 教育机构
 routers.use('', edu.routes(), edu.allowedMethods())
 // // 登陆注册
