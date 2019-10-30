@@ -29,4 +29,11 @@ main.get('/maner-edu', async (ctx) => {
         data:res
     })
 })
+main.get('/register', async (ctx) => {
+    let title = '注册'
+   
+    await ctx.render('register', {
+        title,
+    })
+})
 module.exports = main
