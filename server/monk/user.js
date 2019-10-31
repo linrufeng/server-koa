@@ -15,7 +15,7 @@ class Use{
            }
         }
         let res = await userdb.findOne({countName:obj.countName})
-        
+
         if(obj.password === res.password){
             return{
                 code:1,
@@ -64,6 +64,7 @@ class Use{
                 msg:'验证码不正确'
             }
         }  
+
         return  await userdb.insert({
             countName: obj.countName,
             email:obj.email|| '',
@@ -102,8 +103,7 @@ class Use{
                       data:error,
                       msg:"发生错误"
                   })
-                }
-                console.log('Message sent: %s', info.messageId);
+                }               
                 resolve({
                     code:1,
                     data:info.messageId,
@@ -120,6 +120,24 @@ class Use{
             ary.push(Math.round(Math.random()*9));
         }         
         return ary.join('');
+    }
+    /**
+     * 绑定邮箱
+     */
+    async bindEmail(obj){        
+        /**
+         * 通过验证码
+         */
+        if(obj.semailCode !== obj.emailCode){
+            return {
+                code:0,
+                msg:'验证码不正确'
+            }
+        }  
+        let res = await userdb.findOneAndUpdate({'_id':obj._id},{$set:{
+            "email": obj.email
+        }})
+        return res
     }
 }
 //  let test = new Use('lls')

@@ -44,7 +44,8 @@ login.post('/login',async(ctx)=>{
     ctx.body = res
 })
 login.post('/logout',async(ctx)=>{
-    ctx.session.login = false;     
+    ctx.session.login = false;    
+    ctx.session.user = null; 
     ctx.body = {
         code:0,
         msg:'注销成功'
