@@ -1,8 +1,8 @@
 const Router = require('koa-router')
 const User = require('../monk/user')
-const login = new Router()
+const users = new Router()
 // 注册
-login.post('/register', async (ctx) => {
+users.post('/register', async (ctx) => {
     const data = ctx.request.body    
     const param = Object.assign(data,{semailCode:ctx.session.emailCode})       
     ctx.body = await User.add(param)
@@ -14,7 +14,7 @@ login.post('/register', async (ctx) => {
  * 参数 email 
  * 生成一个 验证码
  */
-login.post('/getcode',async(ctx)=>{
+users.post('/getcode',async(ctx)=>{
     const data = ctx.request.body;  
     let code = User.random()
     ctx.session.emailCode = code;
@@ -23,7 +23,7 @@ login.post('/getcode',async(ctx)=>{
         code:code
     })
 })
-login.post('/login',async(ctx)=>{
+users.post('/login',async(ctx)=>{
     // this..url('center')
     if(ctx.session.login){
         ctx.body ={
@@ -39,16 +39,20 @@ login.post('/login',async(ctx)=>{
         ctx.session.login = true; 
         // 缓存用户信息
         ctx.session.user = res.data;
-        login.url('/center')
+        users.url('/center')
     }
     ctx.body = res
 })
-login.post('/logout',async(ctx)=>{
+users.post('/logout',async(ctx)=>{
     ctx.session.login = false;    
     ctx.session.user = null; 
     ctx.body = {
         code:0,
         msg:'注销成功'
     }
+})
+users.post('/applyToBeEdu',async(ctx)=>{
+    const data = ctx.request.body;  
+    ctx.body =  await User.applyToBeEdu(data);
 })
 module.exports = login
