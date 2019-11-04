@@ -52,4 +52,4 @@ users.post('/logout',async(ctx)=>{
     }
 })
 
-module.exports = login
+module.exports = users

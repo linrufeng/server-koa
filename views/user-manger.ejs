@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理</title>
+</head>
+<body>
+    <div class="" id="app">
+           <div class="">
+               <span class="name">用户</span>
+               <input  v-model="name" type="text" :value="name">
+           </div>
+           <div class="">
+                <span class="name">密码</span>
+                <input v-model="passworld" :value="passworld" type="text">
+            </div>
+            <div class="btn-box">
+                <span @click="login">登录</span>
+            </div>
+    </div>
+</body>
+<script src="./vue.min.js">
+</script>
+<script src="./axios.min.js">
+</script>
+<script>
+     new Vue({
+    el: '#app',
+    data: {           
+            name: "请输入您的用户名",
+            passworld: "请输入您的密码"
+        },
+    methods: {
+        details: function() {
+            return  this.site + " - 学的不仅是技术，更是梦想！";
+        },
+        login:function(){
+            axios.post('/login', {
+                countName: this.name,
+                password: this.passworld
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+   
+})
+</script>
+
+</html>

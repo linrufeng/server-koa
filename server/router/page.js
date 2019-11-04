@@ -47,4 +47,10 @@ main.get('/center', async (ctx) => {
         title,
     })
 })
+main.get('/manager', async (ctx) => {
+    let title = '登录成功'
+    await ctx.render('user-manger', {
+        title,
+    })
+})
 module.exports = main
