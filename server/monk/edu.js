@@ -16,6 +16,11 @@ class Edu {
      * 增加
      * reg: 根据 全称 或地址 判断是否有重复的
      * @param {*} obj 
+     * //  用户状态 登陆 
+        // id
+        // 增加 
+        // state:0 
+        // type:'user'
      */
     async add(obj){
         let checkfullname = await this.get({fullname:obj.fullname})
@@ -25,7 +30,22 @@ class Edu {
                 msg:'已经创建'
             };
         }else{
-            let res = await edudb.insert(obj)        
+            let res = await edudb.insert({
+                userId:obj.userId, // 用户 id               
+                edufullName:obj.edufullName, // 机构全称
+                eduName:obj.eduName, // 教育机构简称 
+                des:obj.des, // 教育机构描述
+                owerName:obj.owerName, // 拥有者姓名
+                fmImg:obj.fmImg, // 封面图片
+                tel:obj.tel, // 手机
+                email:obj.email, // 邮箱
+                addressDes:obj.addressDes,  // 三级地址
+                addressId:obj.addressId, // 三级地址 id
+                addressdetail:obj.addressdetail, // 地址详情
+                license:obj.license,
+                type:'edu',                
+                state:0 // 0等待审批  1申请通过 2 拒绝
+            })        
              return res
         }   
     }

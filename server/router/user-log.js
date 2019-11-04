@@ -51,8 +51,5 @@ users.post('/logout',async(ctx)=>{
         msg:'注销成功'
     }
 })
-users.post('/applyToBeEdu',async(ctx)=>{
-    const data = ctx.request.body;  
-    ctx.body =  await User.applyToBeEdu(data);
-})
+
 module.exports = login

@@ -140,29 +140,7 @@ class Use{
         return res
     }
 }
-//  let test = new Use('lls')
-// test.vertemail({email:'525019506@qq.com'})
 
 module.exports = new Use()
 
-//  let transporter = nodemailer.createTransport({
-//             // host: 'smtp.ethereal.email',
-//             service: '"163"', // 使用了内置传输发送邮件 查看支持列表：https://nodemailer.com/smtp/well-known/
-//             port: 994, // SMTP 端口
-//             secureConnection: true, // 使用了 SSL
-//             auth: {
-//               user: '18201255339@163.com',//你的邮箱
-//               // 这里密码不是qq密码，是你设置的smtp授权码        
-//               pass:'li8989'      
-//             }
-//           });
-          
-//           let mailOptions = {
-//             from: '<18201255339@163.com>', // sender address
-//             to: '525019506@qq.com', // list of receivers
-//             subject: 'Hello3123123', // Subject line
-//             // 发送text或者html格式
-//              text: 'Hello 我是火星黑洞', // plain text body
-//             // html: '<b>Hello 我是火星黑洞</b>' // html body
-//           };
           

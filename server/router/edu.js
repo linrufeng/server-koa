@@ -4,10 +4,10 @@ const router = new Router();
 /**
  * 教育机构接口
  */
-//  增加教育机构
+//  创建教育申请教育机构
 router.post('/eduAdd',async(ctx)=>{
     const data = ctx.request.body
-    let res = await edu.add(data)
+    let res = await edu.add(data,ctx.session)
     ctx.body = res
 })
 //  增加类别
