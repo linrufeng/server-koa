@@ -15,8 +15,14 @@ class Use{
            }
         }
         let res = await userdb.findOne({countName:obj.countName})
-
+        if(!res){
+            return{
+                code:0,
+                msg:'用户名不存在'
+            }
+        }
         if(obj.password === res.password){
+            
             return{
                 code:1,
                 data:res,
