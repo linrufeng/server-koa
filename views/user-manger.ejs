@@ -8,17 +8,60 @@
 </head>
 <body>
     <div class="" id="app">
-           <div class="">
-               <span class="name">用户</span>
-               <input  v-model="name" type="text" :value="name">
-           </div>
-           <div class="">
-                <span class="name">密码</span>
-                <input v-model="passworld" :value="passworld" type="text">
+        <div v-if="!islogin">
+                <div class="">
+                    <span class="name">用户</span>
+                    <input  v-model="name" type="text" :value="name">
+                </div>
+                <div class="">
+                    <span class="name">密码</span>
+                    <input v-model="passworld" :value="passworld" type="text">
+                </div>
+                <div class="btn-box">
+                    <span @click="login">登录</span>
+                </div>
+        </div>
+        <div  v-if="islogin" class="">
+            <div class="header">
+                    您已经登录了，欢迎来到管理页面   
             </div>
-            <div class="btn-box">
-                <span @click="login">登录</span>
+            <h2>用户管理</h2>
+            <div class="list">
+                <div class="item">
+                    <span class="cell1">姓名</span>
+                    <span class="cell2">电话</span>
+                    <span class="cell3">邮箱</span>
+                    <span class="cell4">密码</span>
+                </div>
+                <div v-for="(item,i) in userLists" :key="i" class="item">
+                    <span class="cell1">{{item.countName}}</span>
+                    <span class="cell2">{{item.tel ?item.tel: '-'}}</span>
+                    <span class="cell3">{{item.email ?item.emai: '-'}}</span>
+                    <span class="cell4">{{item.password}}</span>
+                </div>   
             </div>
+            <h2>申请教育列表</h2>
+            <div class="list">
+                    <div class="item">
+                        <span class="cell1">申请者</span>
+                        <span class="cell2">教育机构全称</span>
+                        <span class="cell4">证件</span>
+                        <span class="cell3">详细资料</span>
+                        <span class="cell4">操作</span>
+                    </div>
+                    <div v-for="(item,i) in eduLists" :key="i" class="item">
+                        <span class="cell1">{{item.countName?item.countName:'管理员'}}</span>
+                        <span class="cell2">{{item.fullname ? item.fullname: '-'}}</span>
+                        <span class="cell4">{{item.license?item.license:'无'}}</span>
+                        <span class="cell3">去查看</span>
+                        <span class="cell3">
+                            <span @click="stop(item._id)">拒绝</span>
+                            <span @click="pass(item._id)">通过</span>
+                            <span @click="delete(item._id)">删除</span>
+                        </span>
+                    </div>  
+            </div>
+        </div> 
     </div>
 </body>
 <script src="./vue.min.js">
@@ -30,28 +73,71 @@
     el: '#app',
     data: {           
             name: "请输入您的用户名",
-            passworld: "请输入您的密码"
+            passworld: "请输入您的密码",
+            islogin:false,
+            userLists:[],
+            eduLists:[]
         },
     methods: {
         details: function() {
             return  this.site + " - 学的不仅是技术，更是梦想！";
         },
         login:function(){
+            let that = this;
             axios.post('/login', {
                 countName: this.name,
                 password: this.passworld
             })
-            .then(function (response) {
-                console.log(response);
+            .then(function (res) {
+                console.log(res.data.code);
+                if(res.data.code){
+                    that.islogin = true
+                }
                 // 获取信息
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            
+        },        
+        userList(){
+            let that = this;
+            axios.get('/manager/userlist').then((res)=>{
+                console.log(res.data)
+                that.userLists = res.data.data
+            })
+        },
+        edbList(){
+            let that = this;
+            axios.get('/manager/useApply').then(res=>{
+                that.eduLists = res.data.data;
+            })  
         }
+    },
+    mounted(){  
+        let _that = this;         
+        axios.get('/userState').then((res)=>{ 
+            if(res.data.code){
+                _that.islogin = true
+                _that.userList()
+                _that.edbList()
+            }else{
+                _that.islogin = false
+            }
+        })
     }
    
 })
 </script>
-
+<style>
+.list .item>span{
+    display: inline-block;
+} 
+.cell1{
+    width: 120px;
+}
+.cell2{
+    width: 120px;
+}
+.cell3{
+    width: 120px;
+}
+</style>
 </html>

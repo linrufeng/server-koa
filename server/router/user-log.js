@@ -51,5 +51,20 @@ users.post('/logout',async(ctx)=>{
         msg:'注销成功'
     }
 })
+users.get('/userState',async(ctx)=>{
+    if(ctx.session.login){
+        ctx.body ={
+            code:1,
+            data:ctx.session.user,
+            msg:'已登录'
+        }
+    }else{
+        ctx.body ={
+            code:0,
+            data:null,
+            msg:'未登录'
+        }
+    }
+})
 
 module.exports = users

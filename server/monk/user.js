@@ -145,6 +145,9 @@ class Use{
         }})
         return res
     }
+    async list(obj){
+        return await userdb.find();
+    }
 }
 
 module.exports = new Use()
