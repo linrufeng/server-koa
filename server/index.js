@@ -27,7 +27,7 @@ app.use(views(path.join(__dirname, '../views'), {
 app.use(async (ctx, next) => {
     //  对路由监听
     
-    console.log(`Process ${ctx.request.method} ${ctx.request.url}...`,'监听',ctx.session.emailCode);
+    console.log(`Process ${ctx.request.method} ${ctx.request.url}...`,'监听');
    
     await next();
 });
