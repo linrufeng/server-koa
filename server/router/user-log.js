@@ -4,7 +4,12 @@ const users = new Router()
 // 注册
 users.post('/register', async (ctx) => {
     const data = ctx.request.body    
-    const param = Object.assign(data,{semailCode:ctx.session.emailCode})       
+    const session = ctx.session;
+    let param = {};
+    if(session.login && session.user && session.type === 1){
+        param['isAdmin'] = true;
+    }
+    param = Object.assign(data,param,{semailCode:session.emailCode})       
     ctx.body = await User.add(param)
     //  如果已经登陆   
 })

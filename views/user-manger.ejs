@@ -36,7 +36,7 @@
                 <div v-for="(item,i) in userLists" :key="i" class="item">
                     <span class="cell1">{{item.countName}}</span>
                     <span class="cell2">{{item.tel ?item.tel: '-'}}</span>
-                    <span class="cell3">{{item.email ?item.emai: '-'}}</span>
+                    <span class="cell3">{{item.email ?item.email: '-'}}</span>
                     <span class="cell4">{{item.password}}</span>
                 </div>   
             </div>
@@ -61,6 +61,12 @@
                         </span>
                     </div>  
             </div>
+            <h2>添加用户</h2>
+            <div>用户名：<input type="text" v-model="add_user_name"></div>
+            <div>密码：<input type="text" v-model="add_user_paddword"></div>
+            <div>邮箱：<input type="text" v-model="add_user_email"></div>
+            <div>电话：<input type="text" v-model="add_user_tel"></div>
+            <div><button @click="addUser">添加</button></div>
         </div> 
     </div>
 </body>
@@ -76,7 +82,11 @@
             passworld: "请输入您的密码",
             islogin:false,
             userLists:[],
-            eduLists:[]
+            eduLists:[],
+            add_user_name:'',
+            add_user_paddword:'',
+            add_user_email:'',
+            add_user_tel:''
         },
     methods: {
         login:function(){
@@ -91,8 +101,7 @@
                     that.islogin = true
                 }
                 // 获取信息
-            })
-            
+            })            
         },        
         userList(){
             let that = this;
@@ -106,6 +115,17 @@
             axios.get('/manager/useApply').then(res=>{
                 that.eduLists = res.data.data;
             })  
+        },
+        addUser(){
+           let params = {
+                countName:this.add_user_name,
+                password:this.add_user_paddword,
+                tel:this.add_user_tel,
+                email:this.add_user_email
+           }
+           axios.post('/register',params).then(res=>{
+               console.log(res)
+           })
         }
     },
     mounted(){  
@@ -134,7 +154,7 @@
     width: 120px;
 }
 .cell3{
-    width: 120px;
+    width: 200px;
 }
 </style>
 </html>

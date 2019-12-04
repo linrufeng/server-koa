@@ -43,9 +43,9 @@ class Use{
      * email 邮箱
      * emailCode 获取到的邮箱验证码
      * password 密码
-     * type:1
+     * type:1 超级管理员 2普通用户
      */
-    async add(obj){       
+    async add(obj){ 
         if(obj.countName && await userdb.findOne({countName:obj.countName})){
             return {
                 code:0,
@@ -58,24 +58,30 @@ class Use{
                 msg:'手机号已被占用'
             }
         }
-        if(obj.email && await userdb.findOne({tel:obj.email})){
-            return {
-                code:0,
-                msg:'邮箱已被占用'
-            }
-        }    
-        if(obj.email&&obj.semailCode !== obj.emailCode){
+        if(obj.email ){
+           let res = await userdb.findOne({email:obj.email})           
+           if(res){
+                return {
+                    code:0,
+                    msg:'邮箱已被占用'
+                }
+           }           
+        }
+         
+        // 超级管理员添加不需要验证码
+        if(!obj.isAdmin && obj.email&&obj.semailCode !== obj.emailCode){
             return {
                 code:0,
                 msg:'验证码不正确'
             }
         }  
-
+        let type = 2; 
         return  await userdb.insert({
             countName: obj.countName,
             email:obj.email|| '',
             tel:obj.tel || '',
-            password:obj.password
+            password:obj.password,
+            type:type
         })
     }
     /**
