@@ -154,6 +154,11 @@ class Use{
     async list(obj){
         return await userdb.find();
     }
+    async findOne(obj){
+        return await userdb.findOne({
+            _id:obj._id
+        });
+    }
 }
 
 module.exports = new Use()

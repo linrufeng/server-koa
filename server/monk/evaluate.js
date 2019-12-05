@@ -40,6 +40,10 @@ class Evaluate{
             })
         return res;
     }
+    async getOneOfEdu(param){
+        let res = await evaluatedb.find({targetId:param.targetId})
+        return res;
+    }
     async deleteorg(obj){
         return await evaluatedb.findOneAndDelete({_id:obj._id})
     }
