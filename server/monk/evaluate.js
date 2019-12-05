@@ -1,6 +1,14 @@
 const {evaluatedb} = require('./db');
 class Evaluate{
     constructor(){}
+    /**
+     * 增加评论
+     * 用户id
+     * 评论对象id
+     * 评论内容
+     * 分数
+     * @param {*} obj 
+     */
     async addorg(obj){
         let res = await evaluatedb.insert({
             userId:obj.userId || '',
@@ -11,7 +19,7 @@ class Evaluate{
         })
         return res;
     }
-    eidtorg(obj){
+    async eidtorg(obj){
         let old = await evaluatedb.findOne({_id:obj._id})
         if(!old){
             return{
@@ -36,3 +44,4 @@ class Evaluate{
         return await evaluatedb.findOneAndDelete({_id:obj._id})
     }
 }
+module.exports = new Evaluate()

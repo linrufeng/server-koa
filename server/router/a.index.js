@@ -2,7 +2,8 @@ const Router = require('koa-router');
 const page = require('./page'); // 首页
 const userlog = require('./user-log'); // 注册
 const edu = require('./edu') // 教育
-const manager = require('./manager');
+const manager = require('./manager'); // 管理
+const evaluate = require('./evaluate');
 // const jigou = require()
 let routers = new Router();
 //  页面路由
@@ -19,4 +20,6 @@ routers.use('',manager.routes(),manager.allowedMethods());
 // 用户端 浏览 评论 修改自己信息 
 
 // routers.use('/teacher',teachers.routes(),teachers.allowedMethods());
+// 用户评论
+routers.use('',evaluate.routes(),evaluate.allowedMethods());
 module.exports = routers;

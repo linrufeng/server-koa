@@ -169,6 +169,12 @@ class Edu {
             };
         }              
     }
+    async getOne(obj){
+        console.log(obj)
+        let res = await edudb.findOne({_id:obj._id}) 
+        
+        return res
+    }
     /**
      * 重新编辑
      * 根据id查询然后修改

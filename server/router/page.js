@@ -53,4 +53,10 @@ main.get('/manager', async (ctx) => {
         title,
     })
 })
+main.get('/comment', async (ctx) => {
+    let title = '登录成功'
+    await ctx.render('user-comment', {
+        title,
+    })
+})
 module.exports = main

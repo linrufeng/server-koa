@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户评论-对教育机构</title>
+</head>
+<body>
+    <div class="" id="app">
+        <div :id="data._id">
+            {{data.name}}
+        </div>
+        <div>
+            <p>评论</p>
+            <input type="text" v-model="score">
+            <textarea v-model="msg" name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <button @click="submet">提交评论</button>
+    </div>
+</body>
+</html>
+<script src="./vue.min.js"></script>
+<script src="./axios.min.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data(){
+        return{
+            data:{},
+            msg:'',
+            score:0
+        }
+    },
+    
+    methods:{
+        getedu(){
+            let that = this;
+            axios.post('/edu',{
+                
+                    _id:'5db6fe8a19b31581b8aab715'
+                
+            }).then(res=>{               
+                 that.data = res.data;
+            })  
+        },
+        submet(){  
+            axios.post('/addEvaluate',{                
+                targetId:this.data._id,
+                msg:this.msg,
+                score:this.score            
+            }).then(res=>{               
+                // that.data = res.data;
+            })  
+        }
+    },
+    mounted(){
+        this.getedu()
+    }
+  })
+</script>
